@@ -1,0 +1,45 @@
+<p-table [showCurrentPageReport]="true" #dt1 [columns]="columns" [value]="data" [paginator]="true" [rows]="15"
+    [resizableColumns]="true" [globalFilterFields]="columns" responsiveLayout="scroll" [showCurrentPageReport]="true"
+    [scrollable]="true" [rowsPerPageOptions]="[5, 10, 15]"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+    <ng-template pTemplate="caption" *ngIf="showInput">
+        <div class="flex">
+            <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Search" />
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns" style="min-width:100px">
+                <ng-container *ngIf="col.type !== 'button'">
+                    <div pSortableColumn="{{col.field}}">
+                        {{ col.header }}
+                        <p-columnFilter [ngStyle]="{'visibility': displayFilter ? 'visible' : 'hidden'}"
+                            *ngIf="col.type !== 'date'" type="text" [field]="col.field" display="menu"></p-columnFilter>
+                        <p-columnFilter [ngStyle]="{'visibility': displayFilter ? 'visible' : 'hidden'}"
+                            *ngIf="col.type === 'date'" type="date" [field]="col.field" display="menu"></p-columnFilter>
+                        <p-sortIcon field="{{col.field}}"></p-sortIcon>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="col.type === 'button'">
+                    <!-- Column type is button, so do not render pSortableColumn -->
+                    {{ col.header }}
+                </ng-container>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <ng-template #defaultTemplate>
+            <tr>
+                <td *ngFor="let col of columns">
+                    {{rowData[col.field]}}
+                </td>
+            </tr>
+        </ng-template>
+        <ng-container
+            *ngTemplateOutlet="customBodyTemplate ? customBodyTemplate : defaultTemplate; context: {$implicit: rowData}"></ng-container>
+    </ng-template>
+</p-table>
