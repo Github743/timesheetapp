@@ -1,0 +1,3 @@
+<p-calendar [maxDate]="dateTime" [(ngModel)]="selectedMonth" name="selectedMonth" dateFormat="MM" view="month" [yearNavigator]="true"
+    [monthNavigator]="true" (onSelect)="updateDaysInMonth($event)" [ngModelOptions]="{standalone: true}"
+    [readonlyInput]="true"></p-calendar>
