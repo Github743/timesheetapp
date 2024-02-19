@@ -1,1 +1,11 @@
-
+{
+    "environment": {
+        "isLocal": false
+    },
+    "local": {
+        "baseUrl": "http://localhost:5074"
+    },
+    "dev": {
+        "baseUrl": "https://my-api.azurewebsites.net"
+    }
+}
